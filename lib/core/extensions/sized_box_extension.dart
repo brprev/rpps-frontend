@@ -8,6 +8,7 @@ class VerticalSpace extends SizedBox {
   static const s16 = VerticalSpace(AppSizes.s16);
   static const s24 = VerticalSpace(AppSizes.s24);
   static const s32 = VerticalSpace(AppSizes.s32);
+  static const s48 = VerticalSpace(AppSizes.s48);
 
   const VerticalSpace(double space, {super.key}) : super(height: space);
 }
