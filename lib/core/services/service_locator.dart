@@ -9,7 +9,12 @@ final sl = GetIt.instance;
 Future<void> init() async {
   // Infra
   sl.registerLazySingleton(() => http.Client());
-  sl.registerLazySingleton<IHttpClient>(() => HttpClient(sl()));
+  sl.registerLazySingleton<IHttpClient>(
+    () => HttpClient(
+      client: sl(),
+      baseUrl: 'http://api.openrpps.com:8080/api',
+    ),
+  );
 
   // Data sources
 

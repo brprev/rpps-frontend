@@ -7,8 +7,13 @@ import 'i_http_client.dart';
 
 class HttpClient implements IHttpClient {
   final Client _client;
+  final String _baseUrl;
 
-  HttpClient(Client client) : _client = client;
+  HttpClient({
+    required Client client,
+    String baseUrl = '',
+  })  : _client = client,
+        _baseUrl = baseUrl;
 
   @override
   Future<dynamic> request({
@@ -25,15 +30,17 @@ class HttpClient implements IHttpClient {
 
     final jsonBody = body != null ? jsonEncode(body) : null;
 
+    final uriPath = Uri.parse(_baseUrl + url);
+
     final httpRequestsMap = <HttpMethod, Future<Response>>{
-      HttpMethod.get: _client.post(Uri.parse(url)),
+      HttpMethod.get: _client.get(uriPath),
       HttpMethod.post: _client.post(
-        Uri.parse(url),
+        uriPath,
         headers: defaultHeaders,
         body: jsonBody,
       ),
       HttpMethod.put: _client.put(
-        Uri.parse(url),
+        uriPath,
         headers: defaultHeaders,
         body: jsonBody,
       ),
