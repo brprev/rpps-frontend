@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/services/service_locator.dart' as di;
+import 'core/theme/managers/theme_manager.dart';
 import 'features/auth/presentation/pages/sign_in_page.dart/sign_in_cubit.dart';
 import 'features/auth/presentation/pages/sign_in_page.dart/sign_in_page.dart';
 
@@ -22,9 +23,10 @@ class MyApp extends StatelessWidget {
           create: (context) => di.sl<SignInCubit>()..onInit(),
         ),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SignInPage(),
+        theme: createTheme(),
+        home: const SignInPage(),
       ),
     );
   }

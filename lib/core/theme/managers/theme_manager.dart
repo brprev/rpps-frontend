@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../data/text_theme.dart';
 import 'colors_manager.dart';
 
-ThemeData createTheme(IAppColors appColors) {
+ThemeData createTheme() {
+  final appColors = AppColors();
+
   return ThemeData(
     brightness: appColors.colorScheme.brightness,
     colorScheme: appColors.colorScheme,
