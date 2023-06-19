@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 
 abstract class IAppColors {
-  AppColors get colors;
-
   late ColorScheme colorScheme;
 }
 
 class AppColors implements IAppColors {
-  @override
-  final colors = AppColors();
-
   @override
   late ColorScheme colorScheme;
 
