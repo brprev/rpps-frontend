@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 
+import '../../features/auth/auth_dependencies.dart';
 import '../http/http_client.dart';
 import '../http/i_http_client.dart';
 
@@ -16,11 +17,6 @@ Future<void> init() async {
     ),
   );
 
-  // Data sources
-
-  // Repositories
-
-  // Use cases
-
-  // Cubits
+  // Features
+  await initAuthDependencies();
 }
