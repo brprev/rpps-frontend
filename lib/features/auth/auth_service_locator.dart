@@ -7,9 +7,7 @@ import 'domain/repositories/i_sign_in_repository.dart';
 import 'domain/use_cases/sign_in_use_case.dart';
 import 'presentation/pages/sign_in_page.dart/sign_in_cubit.dart';
 
-final sl = GetIt.instance;
-
-Future<void> initAuthDependencies() async {
+Future<void> initFeatureAuth(GetIt sl) async {
   // Data sources
   sl.registerLazySingleton<ISignInDataSource>(
     () => SignInDataSource(httpClient: sl()),

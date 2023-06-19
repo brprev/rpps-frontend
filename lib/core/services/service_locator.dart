@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 
-import '../../features/auth/auth_dependencies.dart';
+import '../../features/auth/auth_service_locator.dart';
 import '../http/http_client.dart';
 import '../http/i_http_client.dart';
 
@@ -18,5 +18,5 @@ Future<void> init() async {
   );
 
   // Features
-  await initAuthDependencies();
+  await initFeatureAuth(sl);
 }
