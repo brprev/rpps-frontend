@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/routes/routes_manager.dart';
 import 'core/services/service_locator.dart' as di;
 import 'core/theme/managers/theme_manager.dart';
-import 'features/auth/presentation/pages/sign_in_page.dart/sign_in_cubit.dart';
+import 'features/auth/presentation/pages/sign_in_page/sign_in_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

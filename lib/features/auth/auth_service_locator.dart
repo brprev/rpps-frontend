@@ -5,7 +5,7 @@ import 'data/repositories/sign_in_repository.dart';
 import 'domain/data_sources/i_sign_in_data_source.dart';
 import 'domain/repositories/i_sign_in_repository.dart';
 import 'domain/use_cases/sign_in_use_case.dart';
-import 'presentation/pages/sign_in_page.dart/sign_in_cubit.dart';
+import 'presentation/pages/sign_in_page/sign_in_cubit.dart';
 
 Future<void> initFeatureAuth(GetIt sl) async {
   // Data sources

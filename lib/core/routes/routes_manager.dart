@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../features/auth/presentation/pages/sign_in_page.dart/sign_in_page.dart';
+import '../../features/auth/presentation/pages/sign_in_page/sign_in_page.dart';
 
 class Routes {
   static const String signInRoute = '/';
