@@ -12,7 +12,7 @@ class SignInCubit extends Cubit<SignInPageState> {
   SignInCubit({
     required SignInUseCase signInUseCase,
   })  : _signInUseCase = signInUseCase,
-        super(SignInPageState.empty);
+        super(SignInPageState.loaded);
 
   static SignInCubit get(context) => BlocProvider.of(context);
 
@@ -21,21 +21,38 @@ class SignInCubit extends Cubit<SignInPageState> {
   late final TextEditingController passwordTextController;
 
   Future<void> onInit() async {
-    emit(SignInPageState.empty);
-
     signInFormKey = GlobalKey<FormState>();
     emailTextController = TextEditingController();
     passwordTextController = TextEditingController();
+
+    emit(SignInPageState.loaded);
   }
 
-  Future<AccountEntity> signIn() async {
+  Future<void> onPressedSignIn(BuildContext context) async {
+    final isValidForm = _validateSignInForm();
+    if (!isValidForm) return;
+
+    emit(SignInPageState.loading);
+    final accountEntity = await _signIn(context);
+
+    (accountEntity?.token ?? '').isNotEmpty
+        ? emit(SignInPageState.loaded)
+        : emit(SignInPageState.loading);
+  }
+
+  bool _validateSignInForm() => signInFormKey.currentState?.validate() ?? false;
+
+  Future<AccountEntity?> _signIn(BuildContext context) async {
+    AccountEntity? account;
+
     final params = SignInParams(
       email: emailTextController.text,
       password: passwordTextController.text,
     );
 
     final result = await _signInUseCase(params);
+    result.fold((l) => null, (r) => account = r);
 
-    return const AccountEntity(email: '', token: '', name: '');
+    return account;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/extensions/context_extension.dart';
 import '../../../../../core/extensions/sized_box_extension.dart';
 import '../../widgets/sign_in_card_widget.dart';
 import 'sign_in_cubit.dart';
@@ -14,16 +15,23 @@ class SignInPage extends StatelessWidget {
       body: Center(
         child: BlocBuilder<SignInCubit, SignInPageState>(
           builder: (context, state) {
+            final cubit = SignInCubit.get(context);
+
             final pageState = <SignInPageState, Widget>{
               SignInPageState.empty: const Icon(Icons.question_mark),
               SignInPageState.error: const Icon(Icons.close),
               SignInPageState.loading: const CircularProgressIndicator(),
               SignInPageState.loaded: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: const [
-                  Text('Login'), // TODO: text theme manager
+                children: [
+                  Text('Login', style: context.displayLarge),
                   VerticalSpace.s48,
-                  SignInCardWidget(),
+                  SignInCardWidget(
+                    signInFormKey: cubit.signInFormKey,
+                    emailController: cubit.emailTextController,
+                    passwordController: cubit.passwordTextController,
+                    onSubmit: () => cubit.onPressedSignIn(context),
+                  ),
                 ],
               ),
             };
