@@ -1,3 +1,4 @@
+import '../../../../core/http/http_enums.dart';
 import '../../domain/entities/account_entity.dart';
 
 class SignInModel {
@@ -12,6 +13,8 @@ class SignInModel {
   });
 
   factory SignInModel.fromJson(Map<String, dynamic> json) {
+    if (!json.containsKey('accessToken')) throw HttpError.invalidData;
+
     return SignInModel(
       email: json['name'] ?? 'TODO',
       name: json['email'] ?? 'TODO',
