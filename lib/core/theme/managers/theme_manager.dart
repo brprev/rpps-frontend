@@ -4,7 +4,7 @@ import '../data/text_theme.dart';
 import 'colors_manager.dart';
 
 ThemeData createTheme() {
-  final appColors = AppColors();
+  final appColors = AppColorPalette();
 
   return ThemeData(
     brightness: appColors.colorScheme.brightness,
