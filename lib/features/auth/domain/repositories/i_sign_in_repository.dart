@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/failures.dart';
-import '../entities/account_entity.dart';
 
 abstract class ISignInRepository {
-  Future<Either<Failure, AccountEntity>> signIn(String email, String password);
+  Future<Either<Failure, bool>> getLoginStatus();
+  Future<Either<Failure, bool>> signIn(String email, String password);
 }

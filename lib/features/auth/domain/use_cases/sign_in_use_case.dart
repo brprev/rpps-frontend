@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/usecases/i_usecase.dart';
-import '../entities/account_entity.dart';
 import '../repositories/i_sign_in_repository.dart';
 
 class SignInParams extends Equatable {
@@ -27,7 +26,7 @@ class SignInUseCase implements IUseCase<void, SignInParams> {
   }) : _repository = repository;
 
   @override
-  Future<Either<Failure, AccountEntity>> call(SignInParams params) {
+  Future<Either<Failure, bool>> call(SignInParams params) {
     return _repository.signIn(params.email, params.password);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 import 'core/routes/routes_manager.dart';
 import 'core/services/service_locator.dart' as di;
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => di.sl<SignInCubit>()..onInit(),
+          create: (context) => di.sl<SignInCubit>()..onInit(context),
         ),
       ],
       child: MaterialApp.router(
