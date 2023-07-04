@@ -13,7 +13,7 @@ Future<void> init() async {
   sl.registerLazySingleton<IHttpClient>(
     () => HttpClient(
       client: sl(),
-      baseUrl: 'http://api.openrpps.com:8080/api',
+      baseUrl: 'http://api.openrpps.com:8080',
     ),
   );
 
