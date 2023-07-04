@@ -13,9 +13,9 @@ TextTheme textTheme(IAppColorPalette appColors) {
       fontSize: AppFontSizes.s24,
     ),
     // headline2
-    displayMedium: getExtraBoldStyle(
+    displayMedium: getLightStyle(
       color: appColors.colorScheme.onBackground,
-      fontSize: AppFontSizes.s20,
+      fontSize: AppFontSizes.s48,
     ),
     // headline3
     displaySmall: getBlackStyle(

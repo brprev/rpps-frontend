@@ -20,7 +20,7 @@ class AppColorPalette implements IAppColorPalette {
       onPrimary: Colors.white,
       onSurface: Colors.black,
       onSecondary: Colors.black,
-      primary: AppColors.primary,
+      primary: Colors.grey,
       secondary: Colors.grey,
       surface: Colors.white,
     );
