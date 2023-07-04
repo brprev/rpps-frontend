@@ -7,4 +7,10 @@ abstract class IHttpClient {
     Map? body,
     Map? headers,
   });
+
+  Future<void> saveToken(String token);
+
+  Future<void> removeToken();
+
+  Future<String?> getToken();
 }

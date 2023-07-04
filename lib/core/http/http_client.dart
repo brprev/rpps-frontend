@@ -1,4 +1,6 @@
+// ignore_for_file: avoid_web_libraries_in_flutter
 import 'dart:convert';
+import 'dart:html' as html;
 
 import 'package:http/http.dart';
 
@@ -6,9 +8,19 @@ import 'http_enums.dart';
 import 'i_http_client.dart';
 
 class HttpClient implements IHttpClient {
+  HttpClient({
+    required Client client,
+    String baseUrl = '',
+  })  : _client = client,
+        _baseUrl = baseUrl;
+
+  final String _baseUrl;
   final Client _client;
 
-  HttpClient(Client client) : _client = client;
+  @override
+  Future<void> removeToken() async {
+    html.window.localStorage.remove('accessToken');
+  }
 
   @override
   Future<dynamic> request({
@@ -23,17 +35,22 @@ class HttpClient implements IHttpClient {
       'accept': 'application/json',
     });
 
-    final jsonBody = body != null ? jsonEncode(body) : null;
+    String token = await getToken() ?? '';
+    token.isNotEmpty
+        ? defaultHeaders.addAll({'Authorization': 'Bearer $token'})
+        : _refreshPage();
 
+    final jsonBody = body != null ? jsonEncode(body) : null;
+    final uriPath = Uri.parse(_baseUrl + url);
     final httpRequestsMap = <HttpMethod, Future<Response>>{
-      HttpMethod.get: _client.post(Uri.parse(url)),
+      HttpMethod.get: _client.get(uriPath),
       HttpMethod.post: _client.post(
-        Uri.parse(url),
+        uriPath,
         headers: defaultHeaders,
         body: jsonBody,
       ),
       HttpMethod.put: _client.put(
-        Uri.parse(url),
+        uriPath,
         headers: defaultHeaders,
         body: jsonBody,
       ),
@@ -52,6 +69,47 @@ class HttpClient implements IHttpClient {
     }
 
     return _handleResponse(response);
+  }
+
+  @override
+  Future<void> saveToken(String token) async {
+    html.window.localStorage.clear();
+    html.window.localStorage['accessToken'] = token;
+  }
+
+  @override
+  Future<String?> getToken() async {
+    final token = html.window.localStorage['accessToken'] ?? '';
+    // TODO: return _isTokenExpired(token) ? null : token;
+
+    return token;
+  }
+
+  void _refreshPage() {
+    html.window.location.reload();
+  }
+
+  bool _isTokenExpired(String jwtToken) {
+    final parts = jwtToken.split('.');
+    if (parts.length != 3) return true;
+
+    final payload = parts[1];
+    String decodedPayload;
+    try {
+      decodedPayload = String.fromCharCodes(
+        base64Url.decode(base64Url.normalize(payload)),
+      );
+    } catch (_) {
+      return true;
+    }
+
+    final payloadMap = json.decode(decodedPayload) as Map<String, dynamic>;
+    if (!payloadMap.containsKey('exp')) return true;
+
+    final exp = payloadMap['exp'] as int;
+    final now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+
+    return now >= exp;
   }
 
   dynamic _handleResponse(Response response) {
