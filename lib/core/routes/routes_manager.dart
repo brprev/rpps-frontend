@@ -1,30 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../features/auth/presentation/pages/sign_in_page/sign_in_cubit.dart';
 import '../../features/auth/presentation/pages/sign_in_page/sign_in_page.dart';
-
-class Routes {
-  static const String signInRoute = '/';
-  static const String manageLaws = '/';
-  static const String manageEntities = '/';
-}
+import '../../features/root/presentation/pages/root_page.dart';
 
 class AppRoutes {
-  static Route<dynamic> onGenerateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case Routes.signInRoute:
-        return MaterialPageRoute(
-          builder: (_) => const SignInPage(),
-        );
+  AppRoutes._();
 
-      case Routes.manageLaws:
-        return MaterialPageRoute(
-          builder: (_) => const SignInPage(),
-        );
+  static const String rootRoute = '/';
+  static const String signInRoute = '/sign-in';
 
-      default:
-        return MaterialPageRoute(
-          builder: (_) => const SignInPage(),
-        );
-    }
+  static GoRouter createRouter() {
+    return GoRouter(
+      initialLocation: AppRoutes.signInRoute,
+      routes: <RouteBase>[
+        GoRoute(
+          name: AppRoutes.signInRoute,
+          path: AppRoutes.signInRoute,
+          builder: (BuildContext context, GoRouterState state) {
+            return const SignInPage();
+          },
+          redirect: (BuildContext context, GoRouterState state) async {
+            final cubit = context.read<SignInCubit>();
+            final loggedIn = await cubit.getLoginStatus();
+            if (loggedIn) return AppRoutes.rootRoute;
+
+            return null;
+          },
+        ),
+        GoRoute(
+          name: AppRoutes.rootRoute,
+          path: AppRoutes.rootRoute,
+          builder: (BuildContext context, GoRouterState state) {
+            return const RootPage();
+          },
+        ),
+      ],
+    );
   }
 }

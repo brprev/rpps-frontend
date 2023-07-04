@@ -9,6 +9,7 @@ import 'features/auth/presentation/pages/sign_in_page/sign_in_cubit.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
+  setPathUrlStrategy();
   runApp(const MyApp());
 }
 
@@ -23,11 +24,10 @@ class MyApp extends StatelessWidget {
           create: (context) => di.sl<SignInCubit>()..onInit(),
         ),
       ],
-      child: MaterialApp(
+      child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         theme: createTheme(),
-        onGenerateRoute: AppRoutes.onGenerateRoute,
-        initialRoute: Routes.signInRoute,
+        routerConfig: AppRoutes.createRouter(),
       ),
     );
   }
