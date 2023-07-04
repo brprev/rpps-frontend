@@ -56,7 +56,7 @@ class ButtonWidget extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSizes.s8),
+          borderRadius: BorderRadius.circular(AppSizes.s4),
         ),
         textStyle: TextStyle(
           color: context.colorScheme.onSecondary,
@@ -64,8 +64,9 @@ class ButtonWidget extends StatelessWidget {
         ),
         padding: const EdgeInsets.symmetric(
           horizontal: AppSizes.s16,
-          vertical: AppSizes.s8,
+          vertical: AppSizes.s16,
         ),
+        minimumSize: const Size(AppSizes.s144, AppSizes.s32),
       ),
       onPressed: onPressed,
       child: Text(text.toUpperCase()),
